@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>Loading...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="creator.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--accent:#E63946;--black:#050505;--white:#FFFFFF;--surface:#0F0F0F;--surface2:#1A1A1A;--gray:#666;--border:rgba(255,255,255,0.06);}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* HERO */
+.hero{position:relative;width:100%;height:100dvh;min-height:580px;overflow:hidden;}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,0.15) 0%,rgba(5,5,5,0) 25%,rgba(5,5,5,0.2) 55%,rgba(5,5,5,0.9) 80%,rgba(5,5,5,1) 100%);}
+.hero-grain{position:absolute;inset:0;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:0 24px max(40px,env(safe-area-inset-bottom,40px));animation:heroin 0.9s ease both;}
+@keyframes heroin{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+.live-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);border-radius:40px;padding:5px 12px 5px 8px;margin-bottom:14px;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:2.5px;text-transform:uppercase;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;animation:livepulse 2.2s ease-in-out infinite;}
+@keyframes livepulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.85);}}
+
+.hero-name{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(56px,15vw,96px);line-height:0.88;letter-spacing:-2px;color:var(--white);margin-bottom:6px;}
+.hero-name-accent{color:var(--accent);font-style:italic;font-weight:700;display:block;}
+.hero-handle{font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:3.5px;text-transform:uppercase;margin-bottom:22px;}
+
+.social-row{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.social-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.09);border-radius:40px;padding:7px 13px;font-size:11px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:0.5px;transition:background 0.2s,transform 0.2s;white-space:nowrap;}
+.social-pill:hover{background:rgba(255,255,255,0.11);transform:translateY(-1px);}
+.social-pill span:first-child{font-size:14px;}
+
+.cta-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:400px;padding:17px 28px;background:var(--accent);border-radius:16px;font-size:14px;font-weight:500;color:#fff;text-decoration:none;transition:filter 0.2s,transform 0.15s;position:relative;overflow:hidden;}
+.cta-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.12) 0%,transparent 100%);}
+.cta-btn:hover{filter:brightness(1.1);}
+.cta-btn:active{transform:scale(0.98);}
+.cta-arrow{font-size:18px;margin-left:auto;}
+
+.scroll-hint{position:absolute;bottom:max(14px,env(safe-area-inset-bottom,14px));right:20px;writing-mode:vertical-rl;font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:3px;text-transform:uppercase;animation:scrollfade 3s ease-in-out infinite;}
+@keyframes scrollfade{0%,100%{opacity:0.3;}50%{opacity:0.7;}}
+
+/* SECTIONS */
+.page-content{max-width:480px;margin:0 auto;padding:0 16px;}
+.section{padding:40px 0;}
+.section-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.eyebrow-line{width:24px;height:1.5px;background:var(--accent);flex-shrink:0;}
+.eyebrow-text{font-size:9px;color:var(--accent);letter-spacing:4px;text-transform:uppercase;font-weight:500;}
+
+/* OF CARDS */
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.of-card{position:relative;border-radius:14px;overflow:hidden;text-decoration:none;display:block;background:var(--surface2);transition:transform 0.25s ease;}
+.of-card:active{transform:scale(0.97);}
+.of-card.wide{grid-column:1/-1;aspect-ratio:16/9;}
+.of-card.tall{aspect-ratio:2/3;}
+.of-card img{width:100%;height:100%;object-fit:cover;display:block;}
+.of-card-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(5,5,5,0.5);transition:backdrop-filter 0.3s;}
+.of-card:active .of-card-overlay{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.card-lock{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.card-label{font-size:11px;color:rgba(255,255,255,0.65);text-align:center;padding:0 14px;letter-spacing:0.5px;line-height:1.4;}
+.card-badge{position:absolute;top:10px;left:10px;font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 9px;border-radius:20px;background:var(--accent);color:#fff;}
+.card-badge.gold{background:linear-gradient(135deg,#996515,#C9A96E);color:#1a1000;}
+
+/* LINK BUTTONS */
+.links-stack{display:flex;flex-direction:column;gap:8px;}
+.link-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:14px;text-decoration:none;position:relative;overflow:hidden;transition:border-color 0.2s,background 0.2s,transform 0.15s;}
+.link-btn::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--btn-accent,var(--accent));transition:width 0.25s ease;}
+.link-btn:hover{border-color:var(--btn-accent,var(--accent));background:rgba(255,255,255,0.025);}
+.link-btn:hover::before{width:4px;}
+.link-btn:active{transform:scale(0.99);}
+.link-icon{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.link-text{flex:1;min-width:0;}
+.link-label{font-size:13.5px;font-weight:500;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.link-sub{font-size:11px;color:var(--gray);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.link-arrow{font-size:16px;color:var(--gray);flex-shrink:0;transition:transform 0.2s,color 0.2s;}
+.link-btn:hover .link-arrow{transform:translateX(3px);color:var(--btn-accent,var(--accent));}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:14px;overflow:hidden;}
+.gallery-cell{aspect-ratio:1;overflow:hidden;background:var(--surface2);}
+.gallery-cell:first-child{grid-column:1/-1;aspect-ratio:3/2;}
+.gallery-cell img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;}
+.gallery-cell:hover img{transform:scale(1.05);}
+.gallery-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px;opacity:0.2;}
+
+/* FOOTER */
+.site-footer{text-align:center;padding:24px 20px max(40px,env(safe-area-inset-bottom,40px));font-size:9px;color:rgba(255,255,255,0.12);letter-spacing:2px;text-transform:uppercase;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img class="hero-photo" src="hero.jpeg" alt="" onerror="this.style.opacity='0'">
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <div class="live-badge"><span class="live-dot"></span><span id="followers">— followers</span></div>
+    <h1 class="hero-name"><span id="name1">—</span><span class="hero-name-accent" id="name2">—</span></h1>
+    <p class="hero-handle" id="handle">@—</p>
+    <div class="social-row" id="socialRow"></div>
+    <a class="cta-btn" id="ctaBtn" href="#" target="_blank" rel="noopener" data-track="free_onlyfans">
+      <span>🔥</span><span id="ctaText">Free OnlyFans</span><span class="cta-arrow">→</span>
+    </a>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<div class="page-content">
+
+  <div class="section reveal">
+    <div class="section-eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Exclusive Content</div></div>
+    <div class="cards-grid">
+      <a class="of-card wide" id="card1" href="#" target="_blank" rel="noopener" data-track="free_onlyfans">
+        <img src="card1.jpeg" alt="" onerror="this.style.display='none'">
+        <div class="card-badge">FREE</div>
+        <div class="of-card-overlay"><div class="card-lock">🔥</div><div class="card-label" id="card1label">Free OnlyFans</div></div>
+      </a>
+      <a class="of-card tall" id="card2" href="#" target="_blank" rel="noopener" data-track="vip_onlyfans">
+        <img src="card2.jpeg" alt="" onerror="this.style.display='none'">
+        <div class="card-badge gold">VIP</div>
+        <div class="of-card-overlay"><div class="card-lock">👑</div><div class="card-label">VIP · Todo sin filtros</div></div>
+      </a>
+      <a class="of-card tall" id="card3" href="#" target="_blank" rel="noopener" data-track="vip_onlyfans">
+        <img src="card3.jpeg" alt="" onerror="this.style.display='none'">
+        <div class="card-badge gold">EXCLUSIVE</div>
+        <div class="of-card-overlay"><div class="card-lock">⭐</div><div class="card-label">Exclusive · No limits</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section reveal">
+    <div class="section-eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Platforms</div></div>
+    <div class="links-stack" id="linksStack"></div>
+  </div>
+
+  <div class="section reveal">
+    <div class="section-eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Gallery</div></div>
+    <div class="gallery-grid">
+      <div class="gallery-cell"><img src="photo1.jpeg" alt="" onerror="this.parentElement.innerHTML='<div class=gallery-ph>📷</div>'"></div>
+      <div class="gallery-cell"><img src="photo2.jpeg" alt="" onerror="this.parentElement.innerHTML='<div class=gallery-ph>📷</div>'"></div>
+      <div class="gallery-cell"><img src="photo3.jpeg" alt="" onerror="this.parentElement.innerHTML='<div class=gallery-ph>📷</div>'"></div>
+      <div class="gallery-cell"><img src="photo4.jpeg" alt="" onerror="this.parentElement.innerHTML='<div class=gallery-ph>📷</div>'"></div>
+      <div class="gallery-cell"><img src="photo5.jpeg" alt="" onerror="this.parentElement.innerHTML='<div class=gallery-ph>📷</div>'"></div>
+      <div class="gallery-cell"><img src="photo6.jpeg" alt="" onerror="this.parentElement.innerHTML='<div class=gallery-ph>📷</div>'"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer" id="footer"></footer>
+
+<script>
+(function(){
+  const C = CREATOR;
+  const accent = C.accent || '#E63946';
+
+  document.documentElement.style.setProperty('--accent', accent);
+  document.title = C.name_line1 + ' ' + C.name_line2;
+
+  document.getElementById('name1').textContent = C.name_line1;
+  document.getElementById('name2').textContent = C.name_line2;
+  document.getElementById('handle').textContent = C.handle;
+  document.getElementById('followers').textContent = C.followers + ' followers';
+  document.getElementById('ctaText').textContent = C.free_label;
+  document.getElementById('ctaBtn').href = C.free_of_url;
+  document.getElementById('card1label').textContent = C.free_label;
+  document.getElementById('card1').href = C.free_of_url;
+  document.getElementById('card2').href = C.vip_of_url;
+  document.getElementById('card3').href = C.vip_of_url;
+  document.getElementById('footer').textContent = C.footer;
+
+  // Social pills
+  const socials = [
+    {icon:'📸',label:'Instagram',url:C.instagram_url,track:'instagram'},
+    {icon:'𝕏', label:'Twitter',  url:C.twitter_url,  track:'twitter'},
+    {icon:'♪', label:'TikTok',   url:C.tiktok_url,   track:'tiktok'},
+    {icon:'💬',label:'Telegram', url:C.telegram_url, track:'telegram'},
+  ];
+  const row = document.getElementById('socialRow');
+  socials.forEach(s => {
+    if (!s.url) return;
+    const a = document.createElement('a');
+    a.className = 'social-pill';
+    a.href = s.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.dataset.track = s.track;
+    a.innerHTML = `<span>${s.icon}</span><span>${s.label}</span>`;
+    row.appendChild(a);
+  });
+
+  // Link buttons
+  const links = [
+    {icon:'🔥',label:C.free_label,    sub:C.free_sub,      url:C.free_of_url,   color:accent,    track:'free_onlyfans'},
+    {icon:'👑',label:C.vip_label,     sub:C.vip_sub,       url:C.vip_of_url,    color:'#8B1a1a', track:'vip_onlyfans'},
+    {icon:'💬',label:C.telegram_label,sub:C.telegram_sub,  url:C.telegram_url,  color:'#229ED9', track:'telegram'},
+    {icon:'𝕏', label:'Twitter / X',   sub:C.twitter_sub,   url:C.twitter_url,   color:'#555',    track:'twitter'},
+    {icon:'📸',label:'Instagram',     sub:C.instagram_sub, url:C.instagram_url, color:'#E1306C', track:'instagram'},
+    {icon:'♪', label:'TikTok',        sub:C.tiktok_sub,    url:C.tiktok_url,    color:'#EE1D52', track:'tiktok'},
+  ];
+  const stack = document.getElementById('linksStack');
+  links.forEach(l => {
+    if (!l.url) return;
+    const a = document.createElement('a');
+    a.className = 'link-btn';
+    a.href = l.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.dataset.track = l.track;
+    a.style.setProperty('--btn-accent', l.color);
+    a.innerHTML = `
+      <div class="link-icon">${l.icon}</div>
+      <div class="link-text">
+        <div class="link-label">${l.label}</div>
+        <div class="link-sub">${l.sub}</div>
+      </div>
+      <span class="link-arrow">→</span>`;
+    stack.appendChild(a);
+  });
+
+  // Click tracking
+  function track(label) {
+    try {
+      const key = 'pca_' + label;
+      localStorage.setItem(key, (parseInt(localStorage.getItem(key)||'0')+1));
+    } catch(e){}
+    if (C.analytics_id && window.umami) umami.track('click', {label});
+  }
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-track]');
+    if (btn) track(btn.dataset.track);
+  });
+
+  // Umami
+  if (C.analytics_url && C.analytics_id) {
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = C.analytics_url;
+    s.setAttribute('data-website-id', C.analytics_id);
+    document.head.appendChild(s);
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+</script>
+</body>
+</html>
